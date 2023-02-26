@@ -1,0 +1,40 @@
+{{ block title }}
+    Results
+{{ endblock }}
+
+{{ block content }}
+
+{# RESULT PAGE TO BE SHOWN TO PLAYER A #}
+{{ if player.id_in_group == 1 }}
+  <h5>Coalition formed:</h5>
+  <p>{{ player.group.merger_result }}</p>
+  <h6>Your share:</h6>
+  <p>{{ player.group.A_result }}</p>
+  <h6>Other shares:</h6>
+  <p>B: {{ player.group.B_result }}</p>
+  <p>C: {{ player.group.C_result }}</p>
+{{ endif }}
+
+{# RESULT PAGE TO BE SHOWN TO PLAYER B #}
+{{ if player.id_in_group == 2 }}
+  <h5>Coalition formed:</h5>
+  <p>{{ player.group.merger_result }}</p>
+  <h6>Your share:</h6>
+  <p>{{ player.group.B_result }}</p>
+  <h6>Other shares:</h6>
+  <p>A: {{ player.group.A_result }}</p>
+  <p>C: {{ player.group.C_result }}</p>
+{{ endif }}
+
+{# RESULT PAGE TO BE SHOWN TO PLAYER C #}
+{{ if player.id_in_group == 3 }}
+  <h5>Coalition formed:</h5>
+  <p>{{ player.group.merger_result }}</p>
+  <h6>Your share:</h6>
+  <p>{{ player.group.C_result }}</p>
+  <h6>Other shares:</h6>
+  <p>A: {{ player.group.A_result }}</p>
+  <p>B: {{ player.group.B_result }}</p>
+{{ endif }}
+
+{{ endblock }}

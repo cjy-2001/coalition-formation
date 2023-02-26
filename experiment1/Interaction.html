@@ -1,0 +1,516 @@
+{{ block title }}
+    {{ if player.id_in_group == 1 }} You are Representative A {{ endif }}
+    {{ if player.id_in_group == 2 }} You are Representative B {{ endif }}
+    {{ if player.id_in_group == 3 }} You are Representative C {{ endif }}
+{{ endblock }}
+
+{{ block content }}
+
+<div class="merger-container">
+
+  <section class="merger" id="ABCmerger">
+    <h4 style="text-align:center"> A, B, C merger: </h4>
+    <h6 style="text-align:center"> All shares must sum to <span id="ABC_sum">  </span></h6>
+    <table class="table">
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>Proposed by</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td id="ABC_A">  </td>
+      <td id="ABC_B">  </td>
+      <td id="ABC_C">  </td>
+      <td id="ABC_proposer"></td>
+      <td><button type="button" id="ABC_accept_button" disabled onclick="acceptABCOffer()">Accept</button></td>
+    </tr>
+    <tr>
+      <td id="ABC_A_accepted">  </td>
+      <td id="ABC_B_accepted">  </td>
+      <td id="ABC_C_accepted">  </td>
+      <td></td>
+      <td></td>
+    </tr>
+    </table>
+    <h6> Submit new proposal: </h6>
+    <label for="ABC_A_input">A:</label>
+    <input type="number" class="proposal-input-box" id="ABC_A_input" name="ABC_A_input" size=5>
+    <label for="ABC_B_input">B:</label>
+    <input type="number" class="proposal-input-box" id="ABC_B_input" name="ABC_B_input" size=5>
+    <label for="ABC_C_input">C:</label>
+    <input type="number" class="proposal-input-box" id="ABC_C_input" name="ABC_C_input" size=5>
+    <button type="button" onclick="sendABCOffer()">Submit</button><br>
+    <p id="ABC_error_message" style="color:red; font-size:75%"></p>
+
+    {{ if player.id_in_group == 1 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.2 }} and {{ C.PLAYER_ID_DICT.3 }}
+      </p>
+    {{ endif }}
+    {{ if player.id_in_group == 2 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.1 }} and {{ C.PLAYER_ID_DICT.3 }}
+      </p>
+    {{ endif }}
+    {{ if player.id_in_group == 3 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.1 }} and {{ C.PLAYER_ID_DICT.2 }}
+      </p>
+    {{ endif }}
+
+    {{ chat nickname=chat_id channel=ABC}}
+    <br /><br />
+  </section>
+
+  <section class="merger" id="ABmerger">
+    <h4 style="text-align:center"> A, B merger: </h4>
+    <h6 style="text-align:center"> All shares must sum to <span id="AB_sum">  </span></h6>
+    <table class="table">
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th>Proposed by</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td id="AB_A">  </td>
+      <td id="AB_B">  </td>
+      <td id="AB_proposer"></td>
+      <td><button type="button" id="AB_accept_button" disabled onclick="acceptABOffer()">Accept</button></td>
+    </tr>
+    <tr>
+      <td id="AB_A_accepted">  </td>
+      <td id="AB_B_accepted">  </td>
+      <td></td>
+      <td></td>
+    </tr>
+    </table>
+    <h6> Submit new proposal: </h6>
+    <label for="AB_A_input">A:</label>
+    <input type="number" class="proposal-input-box" id="AB_A_input" name="AB_A_input" size=5>
+    <label for="AB_B_input">B:</label>
+    <input type="number" class="proposal-input-box" id="AB_B_input" name="AB_B_input" size=5>
+    <button type="button" onclick="sendABOffer()">Submit</button><br>
+    <p id="AB_error_message" style="color:red; font-size:75%"></p>
+
+    {{ if player.id_in_group == 1 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.2 }}
+      </p>
+    {{ endif }}
+    {{ if player.id_in_group == 2 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.1 }}
+      </p>
+    {{ endif }}
+
+    {{ chat nickname=chat_id channel=AB}}
+    <br /><br />
+  </section>
+
+  <section class="merger" id="ACmerger">
+    <h4 style="text-align:center"> A, C merger: </h4>
+    <h6 style="text-align:center"> All shares must sum to <span id="AC_sum">  </span></h6>
+    <table id="ACmerger" class="table">
+    <tr>
+      <th>A</th>
+      <th>C</th>
+      <th>Proposed by</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td id="AC_A">  </td>
+      <td id="AC_C">  </td>
+      <td id="AC_proposer"></td>
+      <td><button type="button" id="AC_accept_button" disabled onclick="acceptACOffer()">Accept</button></td>
+    </tr>
+    <tr>
+      <td id="AC_A_accepted">  </td>
+      <td id="AC_C_accepted">  </td>
+      <td></td>
+      <td></td>
+    </tr>
+    </table>
+    <h6> Submit new proposal: </h6>
+    <label for="AC_A_input">A:</label>
+    <input type="number" class="proposal-input-box" id="AC_A_input" name="AC_A_input" size=5>
+    <label for="AC_C_input">C:</label>
+    <input type="number" class="proposal-input-box" id="AC_C_input" name="AC_C_input" size=5>
+    <button type="button" onclick="sendACOffer()">Submit</button><br>
+    <p id="AC_error_message" style="color:red; font-size:75%"></p>
+
+    {{ if player.id_in_group == 1 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.3 }}
+      </p>
+    {{ endif }}
+    {{ if player.id_in_group == 3 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.1 }}
+      </p>
+    {{ endif }}
+
+    {{ chat nickname=chat_id channel=AC}}
+    <br /><br />
+  </section>
+
+  <section class="merger" id="BCmerger">
+    <h4 style="text-align:center"> B, C merger: </h4>
+    <h6 style="text-align:center"> All shares must sum to <span id="BC_sum">  </span></h6>
+    <table class="table">
+    <tr>
+      <th>B</th>
+      <th>C</th>
+      <th>Proposed by</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td id="BC_B">  </td>
+      <td id="BC_C">  </td>
+      <td id="BC_proposer"></td>
+      <td><button type="button" id="BC_accept_button" disabled onclick="acceptBCOffer()">Accept</button></td>
+    </tr>
+    <tr>
+      <td id="BC_B_accepted">  </td>
+      <td id="BC_C_accepted">  </td>
+      <td></td>
+      <td></td>
+    </tr>
+    </table>
+    <h6> Submit new proposal: </h6>
+    <label for="BC_B_input">B:</label>
+    <input type="number" class="proposal-input-box" id="BC_B_input" name="BC_B_input" size=5>
+    <label for="BC_C_input">C:</label>
+    <input type="number" class="proposal-input-box" id="BC_C_input" name="BC_C_input" size=5>
+    <button type="button" onclick="sendBCOffer()">Submit</button><br>
+    <p id="BC_error_message" style="color:red; font-size:75%"></p>
+
+    {{ if player.id_in_group == 2 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.3 }}
+      </p>
+    {{ endif }}
+    {{ if player.id_in_group == 3 }}
+      <p>
+        Chat with {{ C.PLAYER_ID_DICT.2 }}
+      </p>
+    {{ endif }}
+
+    {{ chat nickname=chat_id channel=BC}}
+    <br /><br />
+
+  </section>
+</div>
+
+<style>
+    .otree-body {
+        max-width: 100%;
+    }
+    .otree-title {
+        text-align: center;
+        padding-top: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+        padding-left: 0;
+    }
+    .otree-timer {
+        text-align: center;
+        margin: auto;
+        margin-bottom: 0;
+        height: 35%;
+        width: 24%;
+        padding-top: 1em;
+        padding-right: 1em;
+        padding-bottom: 1em;
+        padding-left: 1em;
+    }
+    .merger-container {
+        display: flex;
+        gap: 15px;
+        justify-content: space-around;
+    }
+    .merger {
+        margin-top: 1em;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    .proposal-input-box {
+        width: 6em;
+    }
+    .otree-chat__input {
+        width: 87%;
+    }
+</style>
+
+<script>
+
+  // set sums
+  var sums = {{ C.COALITION_SUMS }}
+  var game_sums = sums[{{ player.group.game }}]
+  document.getElementById('ABC_sum').innerHTML = game_sums["ABC"];
+  document.getElementById('AB_sum').innerHTML = game_sums["AB"];
+  document.getElementById('AC_sum').innerHTML = game_sums["AC"];
+  document.getElementById('BC_sum').innerHTML = game_sums["BC"];
+
+  // hide / show appropriate sections for each player and set game sums
+  if ({{ player.id_in_group }} == 1) {
+    document.getElementById('BCmerger').style.display = "none";
+  }
+  if ({{ player.id_in_group }} == 2) {
+    document.getElementById('ACmerger').style.display = "none";
+  }
+  if ({{ player.id_in_group }} == 3) {
+    document.getElementById('ABmerger').style.display = "none";
+  }
+
+  // accept ABC offer button function
+  function acceptABCOffer() {
+
+    // sum of all shares
+    var mergeVal = parseInt(document.getElementById('ABC_A').innerHTML) + parseInt(document.getElementById('ABC_B').innerHTML) + parseInt(document.getElementById('ABC_C').innerHTML);
+
+    // if sum of shares != coalition total, raise error
+    if (mergeVal != game_sums["ABC"]) {
+      document.getElementById('ABC_error_message').style.display = "block";
+      document.getElementById('ABC_error_message').innerHTML = "cannot accept, invalid proposal";
+      liveSend({'type': 'error', 'exception': "cannot accept, invalid proposal"});
+    }
+
+    // else, send offer
+    else {
+      document.getElementById('ABC_error_message').style.display = 'none';
+      document.getElementById('ABC_accept_button').disabled = true;
+      liveSend({'type': 'accept', 'merger': 'ABC', 'accepted_by': {{ player.id_in_group }}});
+    }
+  }
+
+  // accept AB offer button function
+  function acceptABOffer() {
+
+    // sum of all shares
+    var mergeVal = parseInt(document.getElementById('AB_A').innerHTML) + parseInt(document.getElementById('AB_B').innerHTML);
+
+    // if sum of shares != coalition total, raise error
+    if (mergeVal != game_sums["AB"]) {
+      document.getElementById('AB_error_message').style.display = "block";
+      document.getElementById('AB_error_message').innerHTML = "cannot accept, invalid proposal";
+      liveSend({'type': 'error', 'exception': "cannot accept, invalid proposal"});
+    }
+
+    // else, send offer
+    else {
+      document.getElementById('AB_error_message').style.display = "none";
+      document.getElementById('AB_accept_button').disabled = true;
+      liveSend({'type': 'accept', 'merger': 'AB', 'accepted_by': {{ player.id_in_group }}});
+    }
+  }
+
+  // accept AC offer button function
+  function acceptACOffer() {
+
+    // sum of all shares
+    var mergeVal = parseInt(document.getElementById('AC_A').innerHTML) + parseInt(document.getElementById('AC_C').innerHTML);
+
+    // if sum of shares != coalition total, raise error
+    if (mergeVal != game_sums["AC"]) {
+      document.getElementById('AC_error_message').style.display = "block";
+      document.getElementById('AC_error_message').innerHTML = "cannot accept, invalid proposal";
+      liveSend({'type': 'error', 'exception': "cannot accept, invalid proposal"});
+    }
+
+    // else, send offer
+    else {
+      document.getElementById('AC_error_message').style.display = "none";
+      document.getElementById('AC_accept_button').disabled = true;
+      liveSend({'type': 'accept', 'merger': 'AC', 'accepted_by': {{ player.id_in_group }}});
+    }
+  }
+
+  // accept BC offer button function
+  function acceptBCOffer() {
+
+    // sum of all shares
+    var mergeVal = parseInt(document.getElementById('BC_B').innerHTML) + parseInt(document.getElementById('BC_C').innerHTML);
+
+    // if sum of shares != coalition total, raise error
+    if (mergeVal != game_sums["BC"]) {
+      document.getElementById('BC_error_message').style.display = "block";
+      document.getElementById('BC_error_message').innerHTML = "cannot accept, invalid proposal";
+      liveSend({'type': 'error', 'exception': "cannot accept, invalid proposal"});
+    }
+
+    // else, send offer
+    else {
+      document.getElementById('BC_error_message').style.display = "none";
+      document.getElementById('BC_accept_button').disabled = true;
+      liveSend({'type': 'accept', 'merger': 'BC', 'accepted_by': {{ player.id_in_group }}});
+    }
+  }
+
+  // recieves live data from server
+  function liveRecv(data) {
+    // end the game if all users accept a coalition
+    if ('game_over' in data) {
+      if (data.game_over == true) {
+        // end game
+        document.getElementById("form").submit();
+      }
+    }
+
+    if ('accepted' in data) {
+      // show checkmarks for accepted offers
+      document.getElementById(data.accepted).innerHTML = "\u2713";
+    }
+
+    // enable accept buttons / remove checkmarks
+    if ('new_offer' in data){
+      if (data.new_offer == 'ABC') {
+        document.getElementById('ABC_accept_button').disabled = false;
+        // remove checks
+        for (var i = 0; i < data.remove_checks.length; i++) {
+          document.getElementById(data.remove_checks[i]).innerHTML = " ";
+        }
+      }
+      if (data.new_offer == 'AB') {
+        document.getElementById('AB_accept_button').disabled = false;
+        // remove checks
+        for (var i = 0; i < data.remove_checks.length; i++) {
+          document.getElementById(data.remove_checks[i]).innerHTML = " ";
+        }
+      }
+      if (data.new_offer == 'AC') {
+        document.getElementById('AC_accept_button').disabled = false;
+        // remove checks
+        for (var i = 0; i < data.remove_checks.length; i++) {
+          document.getElementById(data.remove_checks[i]).innerHTML = " ";
+        }
+      }
+      if (data.new_offer == 'BC') {
+        document.getElementById('BC_accept_button').disabled = false;
+        // remove checks
+        for (var i = 0; i < data.remove_checks.length; i++) {
+          document.getElementById(data.remove_checks[i]).innerHTML = " ";
+        }
+      }
+    }
+
+    // update merger proposal values
+    if ('merger' in data) {
+      if (data.merger == 'ABC') {
+        document.getElementById('ABC_A').innerHTML = data.ABC_A_val;
+        document.getElementById('ABC_B').innerHTML = data.ABC_B_val;
+        document.getElementById('ABC_C').innerHTML = data.ABC_C_val;
+        document.getElementById('ABC_proposer').innerHTML = data.from;
+      }
+      if (data.merger == 'AB') {
+        // players in coalition
+        document.getElementById('AB_A').innerHTML = data.AB_A_val;
+        document.getElementById('AB_B').innerHTML = data.AB_B_val;
+        document.getElementById('AB_proposer').innerHTML = data.from;
+      }
+      if (data.merger == 'AC') {
+        // players in coalition
+        document.getElementById('AC_A').innerHTML = data.AC_A_val;
+        document.getElementById('AC_C').innerHTML = data.AC_C_val;
+        document.getElementById('AC_proposer').innerHTML = data.from;
+      }
+      if (data.merger == 'BC') {
+        // players in coalition
+        document.getElementById('BC_B').innerHTML = data.BC_B_val;
+        document.getElementById('BC_C').innerHTML = data.BC_C_val;
+        document.getElementById('BC_proposer').innerHTML = data.from;
+      }
+    }
+
+  }
+
+  // function for ABC coalition offer submit button
+  function sendABCOffer() {
+
+    // sum of all share values
+    var ABC_A_val = parseInt(ABC_A_input.value);
+    var ABC_B_val = parseInt(ABC_B_input.value);
+    var ABC_C_val = parseInt(ABC_C_input.value);
+    var mergeVal = ABC_A_val + ABC_B_val + ABC_C_val;
+
+    // if sum of shares != coalition total, raise error, else send the offer
+    if (mergeVal != game_sums["ABC"]) {
+      document.getElementById('ABC_error_message').style.display = "block";
+      document.getElementById('ABC_error_message').innerHTML = "sum of shares not equal to " + game_sums["ABC"];
+      liveSend({'type': 'error', 'exception': "cannot submit, sum of shares not equal to " + game_sums["ABC"]});
+    }
+    else {
+      document.getElementById('ABC_error_message').style.display = "none";
+      liveSend({'type': 'offer', 'merger': 'ABC', 'from': {{ player.id_in_group }}, 'ABC_A_val': ABC_A_val, 'ABC_B_val': ABC_B_val, 'ABC_C_val': ABC_C_val});
+    }
+
+  }
+
+  // function for AB coalition offer submit button
+  function sendABOffer() {
+
+    // sum of all share values
+    var AB_A_val = parseInt(AB_A_input.value);
+    var AB_B_val = parseInt(AB_B_input.value);
+    var mergeVal = AB_A_val + AB_B_val;
+
+    // if sum of shares != coalition total, raise error, else send the offer
+    if (mergeVal != game_sums["AB"]) {
+      document.getElementById('AB_error_message').style.display = "block";
+      document.getElementById('AB_error_message').innerHTML = "sum of shares not equal to "+ game_sums["AB"];
+      liveSend({'type': 'error', 'exception': "cannot submit, sum of shares not equal to "+ game_sums["AB"]});
+    }
+    else {
+      document.getElementById('AB_error_message').style.display = "none";
+      liveSend({'type': 'offer', 'merger': 'AB', 'from': {{ player.id_in_group }}, 'AB_A_val': AB_A_val, 'AB_B_val': AB_B_val});
+    }
+
+  }
+
+  // function for AC coalition offer submit button
+  function sendACOffer() {
+
+    // sum of all share values
+    var AC_A_val = parseInt(AC_A_input.value);
+    var AC_C_val = parseInt(AC_C_input.value);
+    var mergeVal = AC_A_val + AC_C_val;
+
+    // if sum of shares != coalition total, raise error, else send the offer
+    if (mergeVal != game_sums["AC"]) {
+      document.getElementById('AC_error_message').style.display = "block";
+      document.getElementById('AC_error_message').innerHTML = "sum of shares not equal to "+ game_sums["AC"];
+      liveSend({'type': 'error', 'exception': "cannot submit, sum of shares not equal to "+ game_sums["AC"] });
+    }
+    else {
+      document.getElementById('AC_error_message').style.display = "none";
+      liveSend({'type': 'offer', 'merger': 'AC', 'from': {{ player.id_in_group }}, 'AC_A_val': AC_A_val, 'AC_C_val': AC_C_val});
+    }
+
+  }
+
+  // function for BC coalition offer submit button
+  function sendBCOffer() {
+
+    // sum of all share values
+    var BC_B_val = parseInt(BC_B_input.value);
+    var BC_C_val = parseInt(BC_C_input.value);
+    var mergeVal = BC_B_val + BC_C_val;
+
+    // if sum of shares != coalition total, raise error, else send the offer
+    if (mergeVal != game_sums["BC"]) {
+      document.getElementById('BC_error_message').style.display = "block";
+      document.getElementById('BC_error_message').innerHTML = "sum of shares not equal to "+ game_sums["BC"];
+      liveSend({'type': 'error', 'exception': "cannot submit, sum of shares not equal to "+ game_sums["BC"]});
+    }
+    else {
+      document.getElementById('BC_error_message').style.display = "none";
+      liveSend({'type': 'offer', 'merger': 'BC', 'from': {{ player.id_in_group }}, 'BC_B_val': BC_B_val, 'BC_C_val': BC_C_val});
+    }
+
+  }
+
+</script>
+
+{{ endblock }}
