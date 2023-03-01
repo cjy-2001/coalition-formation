@@ -245,7 +245,15 @@ class Interaction(Page):
 
 
 class Results(Page):
+    timeout_seconds = 120
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        player.participant.finished = True
+
+
+class ThankYou(Page):
     pass
 
 
-page_sequence = [ArrivalPage, Interaction, Results]
+page_sequence = [ArrivalPage, Interaction, Results, ThankYou]
