@@ -79,14 +79,14 @@ class ArrivalPage(WaitPage):
     def after_all_players_arrive(group: Group):
         group.game = select_game()
 
+    def before_next_page(player, timeout_happened):
+        player.participant.label = player.PROLIFIC_PID
 
 class Interaction(Page):
     timeout_seconds = 600
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        player.participant.label = player.PROLIFIC_PID
-
         if timeout_happened:
             player.group.merger_result = "No coalition formed"
             player.group.A_result = C.COALITION_SUMS[player.group.game]["A"]
