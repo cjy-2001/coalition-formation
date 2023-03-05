@@ -33,6 +33,14 @@ LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = False
 
+ROOMS = [
+    dict(
+        name='Coalition_Experiment',
+        # display_name='Econ Experiment',
+        # participant_label_file='_rooms/econ101.txt',
+    ),
+]
+
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
