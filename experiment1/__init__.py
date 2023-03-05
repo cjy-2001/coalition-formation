@@ -85,6 +85,8 @@ class Interaction(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
+        player.participant.label = player.PROLIFIC_PID
+
         if timeout_happened:
             player.group.merger_result = "No coalition formed"
             player.group.A_result = C.COALITION_SUMS[player.group.game]["A"]
