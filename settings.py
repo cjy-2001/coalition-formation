@@ -36,7 +36,7 @@ USE_POINTS = False
 ROOMS = [
     dict(
         name='Coalition_Experiment',
-        # display_name='Econ Experiment',
+        display_name='Coalition Experiment',
         # participant_label_file='_rooms/econ101.txt',
     ),
 ]
