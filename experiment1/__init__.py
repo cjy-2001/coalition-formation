@@ -79,8 +79,8 @@ class ArrivalPage(WaitPage):
     def after_all_players_arrive(group: Group):
         group.game = select_game()
 
-    def before_next_page(player, timeout_happened):
-        player.participant.label = player.PROLIFIC_PID
+    # def before_next_page(player, timeout_happened):
+    #     player.participant.label = player.PROLIFIC_PID
 
 class Interaction(Page):
     timeout_seconds = 600
