@@ -158,5 +158,14 @@ class End(Page):
             pay = "$"+str(round(player.participant.payoff, 2))
         )
 
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        player.participant.finished = True
 
-page_sequence = [Instructions, Refund, Outcome, SecondInvest, SecondOutcome, Guess, End]
+
+class ThankYou(Page):
+    def is_displayed(player):
+        return player.participant.treatment == 4
+    
+
+page_sequence = [Instructions, Refund, Outcome, SecondInvest, SecondOutcome, Guess, End, ThankYou]

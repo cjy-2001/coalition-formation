@@ -145,8 +145,8 @@ class End(Page):
     
 
 class ThankYou(Page):
-    pass
+    def is_displayed(player):
+        return player.participant.treatment == 2
     
-
 
 page_sequence = [Instructions, Refund, Outcome, SecondInvest, SecondOutcome, End, ThankYou]
