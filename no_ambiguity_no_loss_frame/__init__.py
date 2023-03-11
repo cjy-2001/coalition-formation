@@ -132,12 +132,21 @@ class SecondInvest(Page):
 
 class End(Page):
     def is_displayed(player):
-        return player.participant.treatment == 2 
+        return player.participant.treatment == 2
+    
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        player.participant.finished = True
 
     def vars_for_template(player):
         return dict(
             pay = "$"+str(round(player.participant.payoff, 2))
         )
+    
+
+class ThankYou(Page):
+    pass
+    
 
 
-page_sequence = [Instructions, Refund, Outcome, SecondInvest, SecondOutcome, End]
+page_sequence = [Instructions, Refund, Outcome, SecondInvest, SecondOutcome, End, ThankYou]
