@@ -1,0 +1,124 @@
+{{ block title }}
+    Comprehension Questions
+{{ endblock }}
+
+{{ block content }}
+
+    <h5>
+        Question 1. For this question, refer to the image below.
+    </h5><br><br>
+
+    <img src="{{ static 'comprehension/chat.png' }}" width="900" height="442"/><br><br>
+
+    <h7>
+        To chat with and propose a merger with just Representative A, you would type into which part of the screen?
+    </h7>
+
+    {{ formfield 'Q1' label="" }}
+
+    <br>
+    <h5>
+        The following questions refer to the table of merger payoffs below:
+    </h5><br>
+
+    <table>
+        <tr>
+          <th>Merging Companies</th>
+          <th>Total Profit (in points)</th> 
+        </tr>
+        <tr>
+          <td>A, B, and C</td>
+          <td>100</td> 
+        </tr>
+        <tr>
+          <td>A and B</td>
+          <td>90</td> 
+        </tr>
+        <tr>
+            <td>A and C</td>
+            <td>80</td> 
+        </tr>
+        <tr>
+            <td>B and C</td>
+            <td>70</td> 
+        </tr>
+      </table><br>
+
+    <h5>
+        Question 2
+    </h5>
+
+    <h7>
+        As Representative B, suppose you want to offer to split the profit from merging with Representative A. What official proposal would you offer?
+    </h7>
+
+    {{ formfield 'Q2' label="" }}
+
+    <br>
+    <h5>
+        Question 3
+    </h5>
+
+    <h7>
+        How many points can the other two players share if they cut you out of the agreement?
+    </h7>
+
+    {{ formfield 'Q3' label="" }}
+
+    <br>
+    <h5>
+        Question 4
+    </h5>
+
+    <h7>
+        Suppose that Representative A offers to merge with both you and Representative C. She offers 30 for you, 20 for C, and wants to keep 50 for herself. You might be able to do better by (select all that apply):
+    </h7><br>
+
+    <input type="hidden" name="Q4" id="Q4">
+
+    <br>
+    <div>
+        <input onclick="updateQ4()" type="checkbox" name="Q4" value="0" id="4.1">
+        <label for="4.1">Offer A to split the profits 50 for her and 50 for youself.</label><br>
+
+        <input onclick="updateQ4()" type="checkbox" name="Q4" value="1" id="4.2">
+        <label for="4.2">Offer C to split the profits 30 for her and 40 for youself.</label><br>
+
+        <input onclick="updateQ4()" type="checkbox" name="Q4" value="0" id="4.3">
+        <label for="4.3">Offer A to split the profits 50 for her and 30 for youself.</label><br>
+
+        <input onclick="updateQ4()" type="checkbox" name="Q4" value="0" id="4.4">
+        <label for="4.4">Offer C to split the profits 10 for her and 90 for youself.</label><br><br>
+    </div><br><br>
+
+    {{ formfield_errors 'Q4' }}
+
+    <script>
+        function updateQ4() {
+            var Q4_value = true;
+            var checkboxes = document.getElementsByName('Q4');
+            for (var i = 0; i < checkboxes.length; i++) {
+                console.log('iteration', i);
+                if (checkboxes[i].checked) {
+                    console.log("checked with value", checkboxes[i].value);
+                    if (checkboxes[i].value != "1") {
+                        Q4_value = false;
+                    }
+                }
+            }
+            document.getElementById('Q4').value = Q4_value;
+        }
+    </script>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+
+    {{ next_button }}
+
+{{ endblock }}

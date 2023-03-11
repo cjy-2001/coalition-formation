@@ -1,0 +1,29 @@
+{{ block title }}
+    Choice Summary
+{{ endblock }}
+
+{{ block content }}
+
+    {{ if player.invest == True }}
+
+        <h7>
+            You chose Option B. If you had chosen Option A, you would not recieve a payout from investing in the project if the project turns out to be successful. Click next to learn whether the project was successful.
+        </h7>
+
+    {{ endif }}
+
+    {{ if player.invest == False }}
+
+        <h7>
+            You chose Option A. If you had chosen Option B, you would not have also received the 100 tokens from Option A. Click next to learn whether the project was successful.
+        </h7>
+
+    {{ endif }}
+
+    <br><br>
+
+    {{ next_button }}
+
+{{ endblock }}
+
+

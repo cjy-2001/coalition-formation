@@ -1,0 +1,93 @@
+{{ block title }}
+    Second Investment
+{{ endblock }}
+
+{{ block content }}
+
+    <h6>
+        For this decision, you have earned an additional payment of 200 tokens. You can keep these tokens or invest them in the same risky project.
+    </h6><br>
+
+    <h7>
+        Again, the risky project will have a 25% chance of success:
+        <ul>
+            <li>If the project is successful, you will pay the tokens you invested and receive M times the number of tokens you invested.</li>
+            <li>If the project is unsuccessful, you will pay the tokens you invested and receive no tokens.</li>
+        </ul>
+    <h7>
+
+
+    <h7>
+        Use the slider below to decide how many tokens you want to invest in the risky project. Note that you can pick any number between 0 and 200, including 0 and 200:
+    </h7><br><br>
+
+    <p style="text-align:left;">
+        0
+        <span style="float:right;">
+            200
+        </span>
+    </p>
+
+    <div class="slidecontainer">
+        <input type="range" min="0" max="200" value="100" class="slider" id="invest-slider">
+    </div><br>
+
+    <div>
+        <h5 style="text-align:center" id="slider-value"></h5>
+    </div><br>
+
+    <input type="hidden" name="second_invest" id="second_invest"/>
+
+    {{ formfield_errors 'second_invest' }}
+
+    <script>
+        var slider = document.getElementById("invest-slider");
+        var output = document.getElementById("slider-value").innerHTML = slider.value
+
+        slider.oninput = function() {
+            document.getElementById("slider-value").innerHTML = this.value;
+            document.getElementById("second_invest").value = this.value;
+        }
+    </script>
+
+    <style>
+        .slidecontainer {
+        width: 100%;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #04AA6D;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #04AA6D;
+            cursor: pointer;
+        }
+    </style>
+
+    {{ next_button }}
+
+{{ endblock }}

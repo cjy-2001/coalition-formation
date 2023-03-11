@@ -1,0 +1,65 @@
+{{ block title }}
+    Welcome
+{{ endblock }}
+
+{{ block content }}
+
+{# WELCOME PAGE TO BE SHOWN TO PLAYER A #}
+{{ if player.id_in_group == 1 }}
+  You have been randomly chosen to represent Company A. The total profit from all the possible mergers for your negotiation is listed in the following table.
+{{ endif }}
+
+{# WELCOME PAGE TO BE SHOWN TO PLAYER B #}
+{{ if player.id_in_group == 2 }}
+  You have been randomly chosen to represent Company B. The total profit from all the possible mergers for your negotiation is listed in the following table.
+{{ endif }}
+
+{# WELCOME PAGE TO BE SHOWN TO PLAYER C #}
+{{ if player.id_in_group == 3 }}
+  You have been randomly chosen to represent Company C. The total profit from all the possible mergers for your negotiation is listed in the following table.
+{{ endif }}
+
+<br><br>
+<table>
+    <tr>
+        <th>A, B, and C</th>
+        <th>A and B</th>
+        <th>A and C</th>
+        <th>B and C</th>
+    </tr>
+    <tr>
+        <td>{{ ABC }}</td>
+        <td>{{ AB }}</td>
+        <td>{{ AC }}</td>
+        <td>{{ BC }}</td>
+    </tr>
+</table><br>
+
+Recall that you will have 10 minutes to come to an agreement with the representatives from the two other companies. If negotiations fail completely or anyone is not included in the final merger, the representatives who are left out will receive the following outside option payoffs.
+
+<br><br>
+<table>
+    <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+    </tr>
+    <tr>
+        <td>{{ A }}</td>
+        <td>{{ B }}</td>
+        <td>{{ C }}</td>
+    </tr>
+</table><br><br>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 10px;
+        text-align: center;
+}
+</style>
+
+{{ next_button }}
+
+{{ endblock }}

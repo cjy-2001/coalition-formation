@@ -1,0 +1,30 @@
+{{ block title }}
+    Instructions
+{{ endblock }}
+
+{{ block content }}
+
+    <h6>
+        In this part of the experiment, we’ll ask you to make a couple of additional decisions that will impact your final payment. In this part of the experiment 500 tokens will equal $1. A description of the first decision is below:
+    </h6><br>
+
+    <h7>
+        For making this decision, you have earned a payment of 200 tokens. You will choose whether to keep these tokens or to invest 100 of them in a risky project. The risky project has a 25% chance of success (i.e., 25 times out of 100, the project will succeed):
+        <ul>
+            <li>If the project is successful, you will pay 100 tokens and receive 8 times the number of tokens you invested – that is, 800 tokens.</li>
+            <li>If the project is unsuccessful, you will pay 100 tokens and receive no tokens.</li>
+        </ul>
+    <h7>
+
+
+    <h7>
+        Half of the participants who choose to invest will randomly be chosen to have their 100 tokens refunded. If you choose to invest and get the refund, the outcomes will be the same as above except you will not pay the 100 tokens.
+
+        Irrespective of whether you invest or not, you will learn two things after your investment decision. First, you will learn whether your investment was or would have been refunded. Second, you will learn whether the project succeeded.
+    </h7><br><br>
+
+    {{ formfield 'invest' label="Do you want to invest 100 tokens in the project?" }}
+
+    {{ next_button }}
+
+{{ endblock }}

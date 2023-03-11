@@ -1,0 +1,36 @@
+{{ block title }}
+    Instructions
+{{ endblock }}
+
+{{ block content }}
+
+    <h6>
+        In this part of the experiment, we’ll ask you to make a couple of additional decisions that will impact your final payment. In this part of the experiment 500 tokens will equal $1. A description of the first decision is below:
+    </h6><br>
+
+    <h7>
+        For making this decision, you have earned a payment of 100 tokens. You can now choose between two options:
+        <ol type="A">
+            <li>receive an additional 100 tokens with certainty</li>
+            <li>participate in a risky project. The risky project has a 25% chance of success (i.e., 25 times out of 100, the project will succeed):</li>
+            <ul>
+                <li>If the project is successful, you will receive 8 times the number of tokens as option A – that is, 800 tokens.</li>
+                <li>If the project is unsuccessful, you will not receive any additional tokens.</li>
+            </ul>
+        </ol>
+    <h7>
+
+
+    <h7>
+        Half of the participants who choose option B will randomly be chosen to also receive the 100 tokens from option A in addition to the tokens they receive from the risky project.
+    <h7>
+    
+    <h7>
+        Irrespective of whether you choose the risky project or not, you will learn two things after your decision. First, you will learn whether you will or would have received the 100 tokens. Second, you will learn whether the project succeeded.
+    </h7><br><br>
+
+    {{ formfield 'invest' label="Please choose either option A or option B." }}
+
+    {{ next_button }}
+
+{{ endblock }}

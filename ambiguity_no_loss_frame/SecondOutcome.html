@@ -1,0 +1,111 @@
+{{ block title }}
+    Second Investment Outcome
+{{ endblock }}
+
+{{ block content }}
+
+    <h7>
+        On this page, you will see the outcome of the investment. Below is a counter displaying the current milliseconds. Press the stop button below to stop the counter and the number it lands on determines the outcome of the investment.
+    </h7>
+    <h7>
+        <ul>
+            <li>If the <b>last 2</b> digits are <b>below 25</b>, you will <b>win</b> the lottery.</li>
+            <li>If the <b>last 2</b> digits are <b>25 or above</b>, you will <b>not win</b> the lottery.</li>
+        </ul>
+    </h7>
+
+    <div class="container">
+    
+        <div class="child1">
+            <div id="clock" onload="currentTime()"></div>
+        </div>
+          
+        <div class="child1">
+            <button id="stop" type="button" onclick="stopTimer()">Stop</button>
+        </div>
+
+        <div class="child2">
+            <h5 id="outcome-text"></h5>
+        </div>
+
+    </div><br><br>
+    
+    <br>
+
+    <input type="hidden" name="second_outcome" id="second_outcome">
+
+    <script>
+        var id = null;
+
+        function currentTime() {
+            let date = new Date(); 
+            let ms = date.getMilliseconds();
+
+            document.getElementById("clock").innerText = ms; 
+            id = setTimeout(function(){ currentTime() }, 1);
+        }
+
+        function stopTimer() {
+            clearTimeout(id);
+            let timeNum = document.getElementById("clock").innerText;
+            lotNum = parseInt(timeNum) % 100;
+            if (lotNum < 25) {
+                document.getElementById('second_outcome').value = true;
+                document.getElementById('outcome-text').innerHTML = "You won!";
+        }
+            else {
+                document.getElementById('second_outcome').value = false;
+                document.getElementById('outcome-text').innerHTML = "You lost.";
+            }
+        }
+
+        currentTime();
+    </script>
+
+    <style>
+
+        #clock {
+            font-size: 1.875em;
+            color: green;
+        }
+
+        #stop {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size:1.2em;
+        }
+
+        #outcome-text {
+            padding: 10px 0px;
+            text-align: center;
+            text-decoration: none;
+            font-size:1.4em;
+        }
+
+        .container {
+            border: 3px solid #fff;
+            padding: 20px;
+        }
+
+        .child1 {
+            width: 12%;
+            float: left;
+            padding: 5px;
+        }
+
+        .child2 {
+            width: 30%;
+            float: left;
+            padding: 5px;
+        }
+
+    </style>
+
+    {{ next_button }}
+
+{{ endblock }}

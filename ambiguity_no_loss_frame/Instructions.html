@@ -1,0 +1,127 @@
+{{ block title }}
+    Instructions
+{{ endblock }}
+
+{{ block content }}
+
+    <h6>
+        In this part of the experiment, we’ll ask you to make a couple of additional decisions that will impact your final payment. In this part of the experiment 500 tokens will equal $1. A description of the first decision is below:
+    </h6><br>
+
+    <h7>
+        For making this decision, you have earned a payment of 100 tokens. You can now choose between two options:
+    </h7>
+
+    <ol type="A">
+        <li>receive an additional 100 tokens with certainty</li>
+        <li>participate in a risky project. The risky project has a 25% chance of success (i.e., 25 times out of 100, the project will succeed):</li>
+        <ul>
+            <li>If the project is successful, you will receive M times the number of tokens you invested – that is, M times 100 tokens.</li>
+            <li>If the project is unsuccessful, you will not recieve any additional tokens.</li>
+        </ul>
+    </ol>
+
+    <h7>
+        M is the investment multiplier, which is revealed using a picture. The picture will show you a grid containing a total of 100 balls, where each ball is either black or white. <b>M will be the number of black balls divided by 10.</b> For instance, if 20 of the 100 balls are black, then you’ll get 2 times the tokens you invest if the project is successful. If 99 of the 100 balls are black, then you’ll get 9.9 times the tokens you invest if the project is successful, and so on. The location of these black balls on the grid will be randomly selected.
+    </h7>
+
+    <h7>
+        You will only be shown the square grid with balls for a very short amount of time, so it is unlikely you will be able to count the exact number of balls. Below is an example of a grid showing a potential value of M. In this example there are 50 black balls (out of the 100 balls). Therefore, the project would pay 5 times the number of tokens you invested if successful. The real multiplier grid will be different.
+    </h7><br>
+
+    <img src="{{ static 'ambiguity_loss_frame/grid.png' }}" width="300" height="300" class="center"/><br><br>
+    
+    <h7>
+        Half of the participants who choose option B will randomly be chosen to also receive the 100 tokens from option A in addition to the tokens they receive from the risky project.
+    </h7>
+
+    <h7>
+        Irrespective of whether you invest or not, you will learn two things after your investment decision. First, you will learn whether your investment was or would have been refunded. Second, you will learn whether the project succeeded.
+    </h7>
+
+    <h7>Click the button below to reveal the grid for 1.5 seconds.</h7><br><br>
+
+    <h5>YOU WILL ONLY BE ABLE TO REVEAL THE GRID ONCE</h5><br>
+    
+    <div>
+        <button id="reveal-button" type="button" onclick="revealGrid()">Reveal Grid</button>
+    </div><br><br>
+
+    <div class="grid-container" id="grid-container" style="display:none;">
+        <canvas id="grid"></canvas>
+    </div>
+
+    <input type="hidden" name="m" id="m"/>
+
+    <script>
+        var m = 80;
+        document.getElementById("m").value = m / 10.0;
+        const circleColors = [];
+        var circleIndex = 0;
+
+        // fill array with 1's
+        for (var i = 0; i < 101; i++) {
+            circleColors[i] = 1;
+        }
+
+        // distribute 0's in array
+        for (var n = 0; n < m; n++) {
+            var index = Math.floor(Math.random() * 101);
+            if (circleColors[index] == 0) {
+                while (circleColors[index] == 0) {
+                    index = Math.floor(Math.random() * 101);
+                }
+            }
+            circleColors[index] = 0;
+        }
+
+        var canvas = document.getElementById("grid");
+        var ctx = canvas.getContext("2d");
+        var rad = 10;
+        var gaps = rad * 3;
+
+        canvas.height = 300;
+        canvas.width = 300;
+
+        for (var x = 0; x < 10; x++) {
+            for (var y = 0; y < 10; y++) {
+                fill = circleColors[circleIndex];
+                circleIndex++;
+                if (fill == 0) {
+                    // draw black circle
+                    ctx.fillStyle = "#000000"
+                    ctx.beginPath();
+                    ctx.arc(rad + gaps * x, rad + gaps * y, rad, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                else {
+                    // draw white circle
+                    ctx.fillStyle = "#FFFFFF"
+                    ctx.beginPath();
+                    ctx.arc(rad + gaps * x, rad + gaps * y, rad, 0, Math.PI * 2, true);
+                    ctx.stroke();
+                    ctx.fill();
+                }
+                
+            }
+        }
+
+        function revealGrid() {
+            document.getElementById("grid-container").style.display = "block";
+            setTimeout(hideGrid, 1500);
+        }
+
+        function hideGrid() {
+            document.getElementById("grid-container").style.display = "none";
+            document.getElementById("reveal-button").disabled = true;
+        }
+    </script>
+
+    <br><br>
+
+    {{ formfield 'invest' label="Please choose either option A or option B." }}
+
+    {{ next_button }}
+
+{{ endblock }}

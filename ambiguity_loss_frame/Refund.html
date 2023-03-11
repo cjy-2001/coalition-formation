@@ -1,0 +1,29 @@
+{{ block title }}
+    Refund Outcome
+{{ endblock }}
+
+{{ block content }}
+
+    {{ if player.invest == True }}
+
+        <h7>
+            You chose to invest in the risky project. Your investment <b>{{ ws }}</b> refunded and so you {{ wl }} lose 100 tokens if the project is unsuccessful. Click continue to learn whether the project was successful. 
+        </h7>
+
+    {{ endif }}
+
+    {{ if player.invest == False }}
+
+        <h7>
+            You chose not to invest in the risky project. If you had invested, your investment <b>{{ wd }}</b> have been refunded so you {{ wdn }} have lost 100 tokens if the project is unsuccessful. Click continue to learn whether the project was successful.
+        </h7>
+
+    {{ endif }}
+
+    <br><br>
+
+    {{ next_button }}
+
+{{ endblock }}
+
+

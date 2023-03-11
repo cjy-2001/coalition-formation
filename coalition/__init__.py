@@ -6,7 +6,7 @@ doc = """  """
 
 def select_game():
     g = random.randint(1, 8)
-    return 3
+    return g
 
 
 class C(BaseConstants):
@@ -79,11 +79,10 @@ class ArrivalPage(WaitPage):
     def after_all_players_arrive(group: Group):
         group.game = select_game()
 
-    # def before_next_page(player, timeout_happened):
-    #     player.participant.label = player.PROLIFIC_PID
 
 class Interaction(Page):
     timeout_seconds = 600
+
 
     @staticmethod
     def before_next_page(player, timeout_happened):
@@ -127,7 +126,8 @@ class Interaction(Page):
 
         # recieved data is an offer
         elif data['type'] == 'offer':
-            data['from'] = C.PLAYER_ID_DICT[player.id_in_group]
+            data['from_ID'] = player.id_in_group
+            data['from_letter'] = C.PLAYER_ID_DICT[player.id_in_group]
 
             # recieved data is for the ABC merger
             if data['merger'] == 'ABC':
@@ -247,15 +247,31 @@ class Interaction(Page):
 
 
 class Results(Page):
-    timeout_seconds = 120
-
-    @staticmethod
     def before_next_page(player, timeout_happened):
-        player.participant.finished = True
+        treatment = random.randint(1, 4)
+        player.participant.treatment = treatment
+
+        if player.id_in_group == 1:
+            player.participant.payoff += player.group.A_result / 10
+        elif player.id_in_group == 2:
+            player.participant.payoff += player.group.B_result / 10
+        elif player.id_in_group == 3:
+            player.participant.payoff += player.group.C_result / 10
 
 
-class ThankYou(Page):
+class StartGame(WaitPage):
     pass
 
+class Welcome(Page):
+    def vars_for_template(player):
+        return dict(
+            ABC=C.COALITION_SUMS[player.group.game]["ABC"],
+            AB=C.COALITION_SUMS[player.group.game]["AB"],
+            AC=C.COALITION_SUMS[player.group.game]["AC"],
+            BC=C.COALITION_SUMS[player.group.game]["BC"],
+            A=C.COALITION_SUMS[player.group.game]["A"],
+            B=C.COALITION_SUMS[player.group.game]["B"],
+            C=C.COALITION_SUMS[player.group.game]["C"]
+        )
 
-page_sequence = [ArrivalPage, Interaction, Results, ThankYou]
+page_sequence = [ArrivalPage, Welcome, StartGame, Interaction, Results]

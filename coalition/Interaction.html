@@ -24,7 +24,7 @@
       <td id="ABC_B">  </td>
       <td id="ABC_C">  </td>
       <td id="ABC_proposer"></td>
-      <td><button type="button" id="ABC_accept_button" disabled onclick="acceptABCOffer()">Accept</button></td>
+      <td><button type="button" id="ABC_accept_button" disabled="true" onclick="acceptABCOffer()">Accept</button></td>
     </tr>
     <tr>
       <td id="ABC_A_accepted">  </td>
@@ -78,7 +78,7 @@
       <td id="AB_A">  </td>
       <td id="AB_B">  </td>
       <td id="AB_proposer"></td>
-      <td><button type="button" id="AB_accept_button" disabled onclick="acceptABOffer()">Accept</button></td>
+      <td><button type="button" id="AB_accept_button" disabled="true" onclick="acceptABOffer()">Accept</button></td>
     </tr>
     <tr>
       <td id="AB_A_accepted">  </td>
@@ -124,7 +124,7 @@
       <td id="AC_A">  </td>
       <td id="AC_C">  </td>
       <td id="AC_proposer"></td>
-      <td><button type="button" id="AC_accept_button" disabled onclick="acceptACOffer()">Accept</button></td>
+      <td><button type="button" id="AC_accept_button" disabled="true" onclick="acceptACOffer()">Accept</button></td>
     </tr>
     <tr>
       <td id="AC_A_accepted">  </td>
@@ -170,7 +170,7 @@
       <td id="BC_B">  </td>
       <td id="BC_C">  </td>
       <td id="BC_proposer"></td>
-      <td><button type="button" id="BC_accept_button" disabled onclick="acceptBCOffer()">Accept</button></td>
+      <td><button type="button" id="BC_accept_button" disabled="true" onclick="acceptBCOffer()">Accept</button></td>
     </tr>
     <tr>
       <td id="BC_B_accepted">  </td>
@@ -367,31 +367,59 @@
     // enable accept buttons / remove checkmarks
     if ('new_offer' in data){
       if (data.new_offer == 'ABC') {
-        document.getElementById('ABC_accept_button').disabled = false;
         // remove checks
         for (var i = 0; i < data.remove_checks.length; i++) {
           document.getElementById(data.remove_checks[i]).innerHTML = " ";
+        }
+        console.log({{player.id_in_group }})
+        // disable / enable accept buttons
+        if ({{ player.id_in_group }} == data.from_ID) {
+          document.getElementById('ABC_accept_button').disabled = true;
+        }
+        else {
+          document.getElementById('ABC_accept_button').disabled = false;
         }
       }
       if (data.new_offer == 'AB') {
-        document.getElementById('AB_accept_button').disabled = false;
         // remove checks
         for (var i = 0; i < data.remove_checks.length; i++) {
           document.getElementById(data.remove_checks[i]).innerHTML = " ";
+        }
+
+        // disable / enable accept buttons
+        if ({{ player.id_in_group }} == data.from_ID) {
+          document.getElementById('AB_accept_button').disabled = true;
+        }
+        else {
+          document.getElementById('AB_accept_button').disabled = false;
         }
       }
       if (data.new_offer == 'AC') {
-        document.getElementById('AC_accept_button').disabled = false;
         // remove checks
         for (var i = 0; i < data.remove_checks.length; i++) {
           document.getElementById(data.remove_checks[i]).innerHTML = " ";
         }
+
+        // disable / enable accept buttons
+        if ({{ player.id_in_group }} == data.from_ID) {
+          document.getElementById('AC_accept_button').disabled = true;
+        }
+        else {
+          document.getElementById('AC_accept_button').disabled = false;
+        }
       }
       if (data.new_offer == 'BC') {
-        document.getElementById('BC_accept_button').disabled = false;
         // remove checks
         for (var i = 0; i < data.remove_checks.length; i++) {
           document.getElementById(data.remove_checks[i]).innerHTML = " ";
+        }
+
+        // disable / enable accept buttons
+        if ({{ player.id_in_group }} == data.from_ID) {
+          document.getElementById('BC_accept_button').disabled = true;
+        }
+        else {
+          document.getElementById('BC_accept_button').disabled = false;
         }
       }
     }
@@ -402,25 +430,25 @@
         document.getElementById('ABC_A').innerHTML = data.ABC_A_val;
         document.getElementById('ABC_B').innerHTML = data.ABC_B_val;
         document.getElementById('ABC_C').innerHTML = data.ABC_C_val;
-        document.getElementById('ABC_proposer').innerHTML = data.from;
+        document.getElementById('ABC_proposer').innerHTML = data.from_letter;
       }
       if (data.merger == 'AB') {
         // players in coalition
         document.getElementById('AB_A').innerHTML = data.AB_A_val;
         document.getElementById('AB_B').innerHTML = data.AB_B_val;
-        document.getElementById('AB_proposer').innerHTML = data.from;
+        document.getElementById('AB_proposer').innerHTML = data.from_letter;
       }
       if (data.merger == 'AC') {
         // players in coalition
         document.getElementById('AC_A').innerHTML = data.AC_A_val;
         document.getElementById('AC_C').innerHTML = data.AC_C_val;
-        document.getElementById('AC_proposer').innerHTML = data.from;
+        document.getElementById('AC_proposer').innerHTML = data.from_letter;
       }
       if (data.merger == 'BC') {
         // players in coalition
         document.getElementById('BC_B').innerHTML = data.BC_B_val;
         document.getElementById('BC_C').innerHTML = data.BC_C_val;
-        document.getElementById('BC_proposer').innerHTML = data.from;
+        document.getElementById('BC_proposer').innerHTML = data.from_letter;
       }
     }
 
@@ -444,6 +472,7 @@
     else {
       document.getElementById('ABC_error_message').style.display = "none";
       liveSend({'type': 'offer', 'merger': 'ABC', 'from': {{ player.id_in_group }}, 'ABC_A_val': ABC_A_val, 'ABC_B_val': ABC_B_val, 'ABC_C_val': ABC_C_val});
+      liveSend({'type': 'accept', 'merger': 'ABC', 'accepted_by': {{ player.id_in_group }}});
     }
 
   }
@@ -465,6 +494,8 @@
     else {
       document.getElementById('AB_error_message').style.display = "none";
       liveSend({'type': 'offer', 'merger': 'AB', 'from': {{ player.id_in_group }}, 'AB_A_val': AB_A_val, 'AB_B_val': AB_B_val});
+      liveSend({'type': 'accept', 'merger': 'AB', 'accepted_by': {{ player.id_in_group }}});
+      document.getElementById('AB_accept_button').disabled = true;
     }
 
   }
@@ -486,6 +517,8 @@
     else {
       document.getElementById('AC_error_message').style.display = "none";
       liveSend({'type': 'offer', 'merger': 'AC', 'from': {{ player.id_in_group }}, 'AC_A_val': AC_A_val, 'AC_C_val': AC_C_val});
+      liveSend({'type': 'accept', 'merger': 'AC', 'accepted_by': {{ player.id_in_group }}});
+      document.getElementById('AC_accept_button').disabled = true;
     }
 
   }
@@ -507,6 +540,8 @@
     else {
       document.getElementById('BC_error_message').style.display = "none";
       liveSend({'type': 'offer', 'merger': 'BC', 'from': {{ player.id_in_group }}, 'BC_B_val': BC_B_val, 'BC_C_val': BC_C_val});
+      liveSend({'type': 'accept', 'merger': 'BC', 'accepted_by': {{ player.id_in_group }}});
+      document.getElementById('BC_accept_button').disabled = true;
     }
 
   }
