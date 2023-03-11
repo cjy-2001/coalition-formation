@@ -129,12 +129,12 @@ class SecondInvest(Page):
 
 
 class End(Page):
+    def is_displayed(player):
+        return player.participant.treatment == 1
+    
     @staticmethod
     def before_next_page(player, timeout_happened):
         player.participant.finished = True
-
-    def is_displayed(player):
-        return player.participant.treatment == 1
 
     def vars_for_template(player):
         return dict(
