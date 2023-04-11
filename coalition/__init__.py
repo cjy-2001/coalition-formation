@@ -63,9 +63,28 @@ class Group(BaseGroup):
     BC_B = models.IntegerField(initial=0)
     BC_C = models.IntegerField(initial=0)
 
+    # count offers
+    count = models.IntegerField(initial=1)
+
 
 class Player(BasePlayer):
     pass
+
+
+# group data fields for all merger offers
+def create_offer_fields(offers, num_iterations):
+    for i in range(1, num_iterations + 1):
+        for offer in offers:
+            field_name = f'{offer}_{i}'
+            if offer == 'offer_type' or offer == 'proposer':
+                field = models.StringField(initial="")
+            else:
+                field = models.IntegerField(initial=0)
+            setattr(Group, field_name, field)
+
+# Create the fields using the create_offer_fields function
+offers = ["proposer", "offer_type", "A", "B", "C"]
+create_offer_fields(offers, 30)
 
 
 # PAGES
@@ -139,6 +158,18 @@ class Interaction(Page):
                 player.group.ABC_C_accepted = False
                 data.update({'new_offer': 'ABC', 'remove_checks': [
                             'ABC_A_accepted', 'ABC_B_accepted', 'ABC_C_accepted']})
+                
+                # record offer
+                count = player.group.count
+                setattr(player.group, f'proposer_{count}', C.PLAYER_ID_DICT[player.id_in_group])
+                setattr(player.group, f'offer_type_{count}', 'ABC')
+                setattr(player.group, f'A_{count}', data['ABC_A_val'])
+                setattr(player.group, f'B_{count}', data['ABC_B_val'])
+                setattr(player.group, f'C_{count}', data['ABC_C_val'])
+
+                # Update count
+                player.group.count += 1
+
                 return {0: data}
 
             # recieved data is for the AB merger
@@ -149,6 +180,17 @@ class Interaction(Page):
                 player.group.AB_B_accepted = False
                 data.update({'new_offer': 'AB', 'remove_checks': [
                             'AB_A_accepted', 'AB_B_accepted']})
+                
+                # record offer
+                count = player.group.count
+                setattr(player.group, f'proposer_{count}', C.PLAYER_ID_DICT[player.id_in_group])
+                setattr(player.group, f'offer_type_{count}', 'AB')
+                setattr(player.group, f'A_{count}', data['AB_A_val'])
+                setattr(player.group, f'B_{count}', data['AB_B_val'])
+
+                # Update count
+                player.group.count += 1
+
                 return {0: data}
 
             # recieved data is for the AC merger
@@ -159,6 +201,17 @@ class Interaction(Page):
                 player.group.AC_C_accepted = False
                 data.update({'new_offer': 'AC', 'remove_checks': [
                             'AC_A_accepted', 'AC_C_accepted']})
+                
+                # record offer
+                count = player.group.count
+                setattr(player.group, f'proposer_{count}', C.PLAYER_ID_DICT[player.id_in_group])
+                setattr(player.group, f'offer_type_{count}', 'AC')
+                setattr(player.group, f'A_{count}', data['AC_A_val'])
+                setattr(player.group, f'C_{count}', data['AC_C_val'])
+
+                # Update count
+                player.group.count += 1
+
                 return {0: data}
 
             # recieved data is for the BC merger
@@ -169,6 +222,17 @@ class Interaction(Page):
                 player.group.BC_C_accepted = False
                 data.update({'new_offer': 'BC', 'remove_checks': [
                             'BC_B_accepted', 'BC_C_accepted']})
+
+                # record offer
+                count = player.group.count
+                setattr(player.group, f'proposer_{count}', C.PLAYER_ID_DICT[player.id_in_group])
+                setattr(player.group, f'offer_type_{count}', 'BC')
+                setattr(player.group, f'B_{count}', data['BC_B_val'])
+                setattr(player.group, f'C_{count}', data['BC_C_val'])
+
+                # Update count
+                player.group.count += 1
+
                 return {0: data}
 
         # the recieved data is an offer acception
