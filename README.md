@@ -2,6 +2,8 @@
 
 This is an oTree app for running an economic experiment on coalition formation and ambiguity aversion.
 
+![preview](/preview.png)
+
 ## Overview
 
 1. Coalition Formation
