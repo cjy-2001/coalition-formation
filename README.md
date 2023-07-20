@@ -65,6 +65,14 @@ Main Treatment Apps:
 - no_ambiguity_loss_frame
 - no_ambiguity_no_loss_frame
 
+## Installation
+
+Make sure oTree is installed before running the app:
+
+```bash
+pip install otree
+```
+
 ## Usage
 
 To run the app:
