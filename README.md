@@ -81,7 +81,7 @@ To run the app:
 
 1. Direct to the right directory
 2. Reset the database: otree resetdb
-3. Start the server: otree runserver
+3. Start the server: otree devserver
 4. Go to http://localhost:8000
 
 Make sure to reset the database between test sessions.
