@@ -1,9 +1,18 @@
 # OTree Experiment - Coalition Formation
 
-This is an oTree app for running an economic experiment on coalition formation and ambiguity aversion.
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+
+> An oTree app for running an economic experiment on coalition formation and ambiguity aversion.
 
 ![preview](/preview.png)
 
+## Table of Contents
+- [Overview](#overview)
+- [Details](#details)
+- [Installation](#installation)
+- [Usage](#usage)
+- [About](#about)
+  
 ## Overview
 
 1. Coalition Formation
